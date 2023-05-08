@@ -129,7 +129,7 @@ function GiveCode() {
                                                 <td>{item.telegramId}</td>
                                                 <td>{item.code}</td>
                                                 <td className="text-center">
-                                                    <AiFillEdit fontSize={"24px"} cursor={"pointer"} color='#71dd37' style={{margin: "0 8px"}} onClick={() => setEditModal({ isShow: true, item: item })}/>
+                                                    <AiFillEdit fontSize={"24px"} cursor={"pointer"} color='#71dd37' style={{ margin: "0 8px" }} onClick={() => setEditModal({ isShow: true, item: item })} />
                                                     <AiFillDelete fontSize={"24px"} cursor={"pointer"} color='#ff3e1d' onClick={() => setDeleteModal({ isShow: true, id: item.id })} />
                                                 </td>
                                             </tr>

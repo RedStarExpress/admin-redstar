@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import axiosInstance from '../../utils/config'
+import InputMask from 'react-input-mask'
 
 function AddModal({ data, setData, addModal, setAddModal, Alert, setAlert }) {
     const nameRef = useRef()
@@ -7,9 +8,13 @@ function AddModal({ data, setData, addModal, setAddModal, Alert, setAlert }) {
 
     const addFunc = (e) => {
         e.preventDefault()
+        console.log({
+            name: nameRef.current.value,
+            addedDate: date.current.value
+        });
         axiosInstance.post(`/api/vi/party/create`, {
             name: nameRef.current.value,
-            date: date.current.value
+            addedDate: date.current.value
         }).then((res) => {
             Alert(setAlert, "success", "Muvafaqqiyatli qo'shildi");
             setData([...data, res.data])
@@ -38,10 +43,10 @@ function AddModal({ data, setData, addModal, setAddModal, Alert, setAlert }) {
 
                                 <div className="col-lg-12">
                                     <div className="mb-3">
-                                        <input className="form-control form-control-lg"
+                                        <InputMask mask="99-99-9999"
+                                            className="form-control form-control-lg"
                                             ref={date} type="text"
-                                            placeholder="Kelgan sanasi"
-
+                                            placeholder="Ro'yxatga olingan sanasi"
                                         />
                                     </div>
                                 </div>

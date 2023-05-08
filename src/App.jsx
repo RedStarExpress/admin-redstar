@@ -10,6 +10,10 @@ import Party from './pages/party/Party'
 import Teacher from './pages/teacher/Teacher'
 import Connected from './pages/connected/Connected'
 import Search from './pages/search/Search'
+import News from './pages/news/News'
+import Chat from './pages/chat/Chat'
+import Hisobotlar from './pages/hisobotlar/Hisobotlar'
+import Qarzim from './pages/qarzim/Qarzim'
 
 function App() {
   return (
@@ -23,6 +27,11 @@ function App() {
       <Route path='/ustozlar' element={<Layout> <Teacher /></Layout>} />
       <Route path='/boglanganlar' element={<Layout> <Connected /></Layout>} />
       <Route path='/qidiruv' element={<Layout> <Search /></Layout>} />
+      <Route path='/yangiliklar' element={<Layout> <News /></Layout>} />
+      <Route path='/chat' element={<Layout> <Chat /></Layout>} />
+      <Route path='/chats/:telegramId' element={<Layout> <Chat /></Layout>} />
+      <Route path='/hisobotlar' element={<Layout> <Hisobotlar /></Layout>} />
+      <Route path='/qarzlarim' element={<Layout> <Qarzim /></Layout>} />
     </Routes>
   )
 }

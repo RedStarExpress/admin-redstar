@@ -4,6 +4,7 @@ import { url } from '../utils/config';
 import { useNavigate } from 'react-router-dom';
 import AlertContent, { Alert } from '../components/Alert';
 import jwt_decode from "jwt-decode";
+import bg from "./gif.gif"
 
 function Login() {
     const [alert, setAlert] = useState({ open: false, color: "", text: "" });
@@ -29,18 +30,18 @@ function Login() {
     }
 
     return (
-        <div class="container-xl">
+        <div class="p-0 " style={{background: `url(${bg})`, backgroundPosition: "center", }}>
             <div className="authentication-wrapper authentication-basic container-p-y">
                 <div className="authentication-inner">
                     <div className="card">
                         <div className="card-body">
                             <div className="app-brand justify-content-center pb-0 mb-2">
-                                <h2>logo</h2>
+                               <img src="../assets/img/logo.png" alt="" height={"150px"}/>
                             </div>
-                            <h4 className="mb-2 justify-content-center text-center">RedStarExpress admin paneliga xush kelibsiz! 👋</h4>
+                            <h4 className="mb-2 justify-content-center text-center" style={{color: "#152b03", fontWeight: "700"}}>RedStarExpress admin paneliga xush kelibsiz!</h4>
                             <form onSubmit={login}>
                                 <div className="mb-3">
-                                    <label for="email" className="form-label">Login</label>
+                                    <label for="email" className="form-label" style={{color: "#152b03", fontWeight: "700"}}>Login</label>
                                     <input
                                         ref={loginRef}
                                         type="text"
@@ -53,7 +54,7 @@ function Login() {
                                 </div>
                                 <div className="mb-3 form-password-toggle">
                                     <div className="d-flex justify-content-between">
-                                        <label className="form-label" for="password">Parol</label>
+                                        <label className="form-label" for="password" style={{color: "#152b03", fontWeight: "700"}}>Parol</label>
                                         {/* <a href="auth-forgot-password-basic.html">
                                             <small>Forgot Password?</small>
                                         </a> */}

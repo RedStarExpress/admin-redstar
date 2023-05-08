@@ -3,15 +3,24 @@ import axiosInstance from '../../utils/config'
 
 function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAlert }) {
     const trekCode = useRef()
+    const karobkaRef = useRef()
+    
     const addFunc = () => {
         const trackCodes = trekCode?.current?.value?.split("\n")
         const trackCodes2 = trackCodes.filter((item) => {
             return item.trim() !== ""
         })
 
+        console.log({
+            "partyId": selected,
+            "trackCodes": trackCodes2,
+            "boxNumber": karobkaRef?.current?.value
+        });
+
         axiosInstance.post(`/base/chine/create`, {
             "partyId": selected,
-            "trackCodes": trackCodes2
+            "trackCodes": trackCodes2,
+            "boxNumber": karobkaRef?.current?.value
         }).then((res) => {
             const newData = data?.filter((item) => {
                 item.trackCodes = res?.data?.trackCodes
@@ -34,6 +43,14 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
                     </div>
                     <div className="modal-body">
                         <div className="row">
+                        <div className="col-lg-12">
+                                    <div className="mb-3">
+                                        <input className="form-control form-control-lg"
+                                            ref={karobkaRef} type="text"
+                                            placeholder='Karobka nomi' />
+                                    </div>
+                                </div>
+
                             <div className="col-lg-12 mb-3">
                                 <textarea className="form-control form-control-lg" rows="10"
                                     ref={trekCode}

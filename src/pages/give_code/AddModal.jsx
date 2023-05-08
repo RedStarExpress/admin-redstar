@@ -59,7 +59,7 @@ function AddModal({ data, setData, addModal, setAddModal, Alert, setAlert, teach
                     "telegramId": Number(telegramIdRef.current.value),
                     "address": addressRef.current.value,
                     "phone": phoneRef.current.value,
-                    "code": codeRef.current.value,
+                    // "code": codeRef.current.value,
                     "teacherId": (teaacherId.current.value === "O'zim o'rganganman" || teaacherId.current.value === "Ustozim boshqa") ? null : teaacherId.current.value
                 }).then((res) => {
                     Alert(setAlert, "success", "Muvafaqqiyatli qo'shildi");
@@ -129,15 +129,15 @@ function AddModal({ data, setData, addModal, setAddModal, Alert, setAlert, teach
                                     </div>
                                 </div>
 
-                                <div className="col-lg-6">
+                                {/* <div className="col-lg-6">
                                     <div className="mb-3">
                                         <input className="form-control form-control-lg"
                                             ref={codeRef} type="text"
                                             placeholder="Berilgan kalit so'zi" />
                                     </div>
-                                </div>
+                                </div> */}
 
-                                <div className="col-lg-6">
+                                <div className="col-lg-12">
                                     <select className="form-select mb-3 w-100"
                                         style={{ height: "48px", width: "250px" }}
                                         ref={teaacherId}>

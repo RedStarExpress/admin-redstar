@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import axiosInstance from '../../utils/config'
+import ReactInputMask from 'react-input-mask'
 
 function EditModal({ data, setData, editModal, setEditModal, Alert, setAlert }) {
     const nameRef = useRef()
@@ -7,10 +8,15 @@ function EditModal({ data, setData, editModal, setEditModal, Alert, setAlert }) 
 
     const editFunc = (e) => {
         e.preventDefault()
+        console.log({
+            id: editModal.item.id,
+            name: nameRef.current.value,
+            arrivalDate: dateRef.current.value
+        });
         axiosInstance.put(`/api/vi/party/update`, {
             id: editModal.item.id,
             name: nameRef.current.value,
-            date: dateRef.current.value
+            arrivalDate: dateRef.current.value
         }).then((res) => {
             Alert(setAlert, "success", "Muvafaqqiyatli o'zgartirildi!");
 
@@ -51,7 +57,7 @@ function EditModal({ data, setData, editModal, setEditModal, Alert, setAlert }) 
 
                                 <div className="col-lg-12">
                                     <div className="mb-3">
-                                        <input className="form-control form-control-lg"
+                                        <ReactInputMask mask="99-99-9999" className="form-control form-control-lg"
                                             ref={dateRef} type="text"
                                             placeholder="Kelgan sanasi"
                                             defaultValue={editModal.item.date}

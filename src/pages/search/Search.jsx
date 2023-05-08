@@ -30,6 +30,7 @@ export default function Search() {
             axiosInstance.get(`/track/code/findByCode?code=${trackCodeRef.current?.value}`)
                 .then((res) => {
                     setData(res.data)
+                    console.log(res.data);
                 })
         }
     }
@@ -86,6 +87,7 @@ export default function Search() {
                                 <th>Joylashuvi</th>
                                 <th>Partiya nomi</th>
                                 <th>Trek kodi</th>
+                                <th>Karobka raqami / kodi</th>
                                 <th>Sanasi</th>
                             </tr>
                         </thead>
@@ -99,6 +101,7 @@ export default function Search() {
                                                 <td>{item.country === "Chine" ? "Xitoy" : "ZedCargo"}</td>
                                                 <td>{item.partyName}</td>
                                                 <td>{item.code}</td>
+                                                <td>{item.country === "Chine" ? item?.boxNumber : item?.clientCode}</td>
                                                 <td>{item.createDate}</td>
                                             </tr>
                                         </>
@@ -110,11 +113,12 @@ export default function Search() {
                                 (data.length > 0 && select === "1") && data?.filter((item) => item.country === "ZedCargo")?.map((item, index) => {
                                     return (
                                         <>
-                                            <tr key={index} className='text-center'>
+                                            <tr key={index} className='text-center table-light'>
                                                 <th>{index + 1}</th>
                                                 <td>{item.country === "Chine" ? "Xitoy" : "ZedCargo"}</td>
                                                 <td>{item.partyName}</td>
                                                 <td>{item.code}</td>
+                                                <td>{item.country === "Chine" ? item?.boxNumber : item?.clientCode}</td>
                                                 <td>{item.createDate}</td>
                                             </tr>
                                         </>
@@ -126,11 +130,12 @@ export default function Search() {
                                 (data.length > 0 && select === "2") && data?.filter((item) => item.country === "Chine")?.map((item, index) => {
                                     return (
                                         <>
-                                            <tr key={index} className='text-center'>
+                                            <tr key={index} className='text-center table-light'>
                                                 <th>{index + 1}</th>
                                                 <td>{item.country === "Chine" ? "Xitoy" : "ZedCargo"}</td>
                                                 <td>{item.partyName}</td>
                                                 <td>{item.code}</td>
+                                                <td>{item.country === "Chine" ? item?.boxNumber : item?.clientCode}</td>
                                                 <td>{item.createDate}</td>
                                             </tr>
                                         </>

@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { BiWorld, BiMessageDetail, BiNews, BiUser } from "react-icons/bi";
-import {BsTelegram} from "react-icons/bs"
-import {FaUsers} from "react-icons/fa"
-import {AiOutlineBarcode, AiOutlineSearch} from "react-icons/ai"
-import {GiCommercialAirplane} from "react-icons/gi"
+import { BsTelegram } from "react-icons/bs"
+import { FaUsers } from "react-icons/fa"
+import { AiOutlineBarcode, AiOutlineSearch } from "react-icons/ai"
+import { GiCommercialAirplane } from "react-icons/gi"
 
 function Aside() {
     const { pathname } = useLocation()
@@ -12,9 +12,9 @@ function Aside() {
     console.log(pathname);
     return (
         <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
-            <div className="app-brand demo">
+            <div className="app-brand demo" style={{ height: "130px", display: "flex", justifyContent: "center" }}>
                 <Link to="/" className="app-brand-link">
-                    LOGO
+                    <img src="../assets/img/logo.png" alt="" height={"180px"} />
                 </Link>
 
                 <a href="/" className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -41,7 +41,7 @@ function Aside() {
 
                 <li className={`my-1 menu-item ${pathname === "/qidiruv" && "active"}`}>
                     <Link to="/qidiruv" className="menu-link">
-                    <i class="bx bx-search me-2" style={{fontSize: "18px"}}></i>
+                        <i class="bx bx-search me-2" style={{ fontSize: "18px" }}></i>
                         <div data-i18n="Analytics">Qidiruv</div>
                     </Link>
                 </li>
@@ -88,7 +88,19 @@ function Aside() {
                     </Link>
                 </li>
 
+                <li className={`my-1 menu-item ${pathname === "/hisobotlar" && "active"}`}>
+                    <Link to="/hisobotlar" className="menu-link">
+                        <BsTelegram fontSize={"18px"} className='me-2' />
+                        <div data-i18n="Analytics">Hisobotlar</div>
+                    </Link>
+                </li>
 
+                <li className={`my-1 menu-item ${pathname === "/qarzlarim" && "active"}`}>
+                    <Link to="/qarzlarim" className="menu-link">
+                        <BsTelegram fontSize={"18px"} className='me-2' />
+                        <div data-i18n="Analytics">Qarzlarim</div>
+                    </Link>
+                </li>
 
             </ul>
         </aside>

@@ -4,6 +4,7 @@ import axiosInstance from '../../utils/config';
 import AddModal from './AddModal';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
+import { AiFillDelete } from 'react-icons/ai';
 
 function China() {
     const [alert, setAlert] = useState({ open: false, color: "", text: "" });
@@ -14,6 +15,8 @@ function China() {
     const [elements, setElements] = useState()
     const [data, setData] = useState([])
     const [party, setParty] = useState([])
+    const [trackCodes, setTrackCodes] = useState([])
+    const [isShow, setIsShow] = useState(false)
 
     const [addModal, setAddModal] = useState(false)
     const [editModal, setEditModal] = useState({ isShow: false, item: {} })
@@ -29,6 +32,7 @@ function China() {
                     .then((res) => {
                         setData(res.data.content);
                         setElements(res.data.totalElements)
+                        console.log(res?.data.content);
                     })
             })
     }, [page, size])
@@ -40,6 +44,49 @@ function China() {
                 setData(res.data.content);
                 setElements(res.data.totalElements)
             })
+    }
+
+    const checkFunc = (code) => {
+        const isCode = trackCodes.includes(code)
+        if (!isCode) {
+            setTrackCodes([...trackCodes, code])
+            console.log([...trackCodes, code]);
+            setIsShow(true)
+        } else {
+            const index = trackCodes.indexOf(code);
+            console.log(index);
+            const newArr = trackCodes.filter(function (item) {
+                return item !== code
+            })
+
+            console.log(newArr);
+            setTrackCodes(newArr)
+            if (newArr.length > 0) {
+                setIsShow(true)
+            } else {
+                setIsShow(false)
+            }
+        }
+
+    }
+
+    const deleteFunc = () => {
+        console.log(trackCodes);
+        axiosInstance.delete(`/base/chine/removeTrackCodes`, {
+            "trackCodes": trackCodes
+        }).then((res) => {
+            axiosInstance.get(`/api/vi/party/getAllActive`)
+                .then((res) => {
+                    setParty(res.data);
+                    setSelected(res.data?.[0]?.id)
+
+                    axiosInstance.get(`/base/chine/getAll?partyId=${res.data?.[0]?.id}&page=${page}&size=${size}`)
+                        .then((res) => {
+                            setData(res.data.content);
+                            setElements(res.data.totalElements)
+                        })
+                })
+        })
     }
 
     return (
@@ -71,6 +118,13 @@ function China() {
                                 Yangi qo'shish
                             </button>
 
+                            <button className="btn btn-danger btn-lg"
+                                style={{ height: "48px" }}
+                                disabled={!isShow}
+                                onClick={() => deleteFunc()}>
+                                O'chirish
+                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -82,6 +136,8 @@ function China() {
                                 <th>№</th>
                                 <th>Trek kodi</th>
                                 <th>Qo'shilgan sanasi</th>
+                                <th>Karobka nomi</th>
+                                <th>Amallar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,6 +154,14 @@ function China() {
                                                     </td>
                                                     <td>
                                                         {item2?.createDate}
+                                                    </td>
+                                                    <td>{item2?.boxNumber}</td>
+                                                    <td className="text-center">
+                                                        <div class="form-check mt-0" style={{ display: "flex", justifyContent: "center" }}>
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"
+                                                                onClick={() => checkFunc(item2?.code)} />
+                                                        </div>
+                                                        {/* <AiFillDelete fontSize={"24px"} cursor={"pointer"} color='#ff3e1d' onClick={() => setDeleteModal({ isShow: true, id: item.id })} /> */}
                                                     </td>
                                                 </tr>
                                             )

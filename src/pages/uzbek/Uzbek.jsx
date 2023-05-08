@@ -6,6 +6,7 @@ import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
 import AddModal from './AddModal';
 import { AiFillDelete } from "react-icons/ai";
+import Show from './Show';
 
 function Uzbek() {
     const [alert, setAlert] = useState({ open: false, color: "", text: "" });
@@ -20,6 +21,7 @@ function Uzbek() {
     const [addModal, setAddModal] = useState(false)
     const [editModal, setEditModal] = useState({ isShow: false, item: {} })
     const [deleteModal, setDeleteModal] = useState({ isShow: false, id: 0 })
+    const [trackCodeModal, setTrackCodeModal] = useState({ isShow: false, data: [], id: null })
 
     useEffect(() => {
         axiosInstance.get(`/api/vi/party/getAllActive`)
@@ -112,7 +114,9 @@ function Uzbek() {
                                                 <th>{index + 1}</th>
                                                 <td>{item.clientCode}</td>
                                                 <td>
-                                                    {
+                                                    <button className='btn btn-success'
+                                                        onClick={() => setTrackCodeModal({ isShow: true, data: item?.trackCodes, id: item.id })}>Ko'rish</button>
+                                                    {/* {
                                                         item?.trackCodes?.map((item2, index) => {
                                                             return (
                                                                 <>
@@ -121,14 +125,14 @@ function Uzbek() {
                                                                 </>
                                                             )
                                                         })
-                                                    }
+                                                    } */}
                                                 </td>
                                                 <td className="text-center">
                                                     {/* <button className="btn btn-success font-size-18 mx-1"
                                                         onClick={() => setEditModal({ isShow: true, item: item })}>
                                                         <i className="bi bi-pencil"></i>
                                                     </button> */}
-                                                                                                    <AiFillDelete fontSize={"24px"} cursor={"pointer"} color='#ff3e1d' onClick={() => setDeleteModal({ isShow: true, id: item.id })} />
+                                                    <AiFillDelete fontSize={"24px"} cursor={"pointer"} color='#ff3e1d' onClick={() => setDeleteModal({ isShow: true, id: item.id })} />
 
                                                 </td>
                                             </tr>
@@ -175,6 +179,7 @@ function Uzbek() {
                         setEditModal={setEditModal}
                         Alert={Alert}
                         setAlert={setAlert}
+                        selected={selected}
                     />
                 )
             }
@@ -188,6 +193,20 @@ function Uzbek() {
                         setDeleteModal={setDeleteModal}
                         Alert={Alert}
                         setAlert={setAlert}
+                    />
+                )
+            }
+
+            {
+                trackCodeModal.isShow && (
+                    <Show
+                        data={data}
+                        setData={setData}
+                        trackCodeModal={trackCodeModal}
+                        setTrackCodeModal={setTrackCodeModal}
+                        Alert={Alert}
+                        setAlert={setAlert}
+                        selected={selected}
                     />
                 )
             }

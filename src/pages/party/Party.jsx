@@ -39,6 +39,7 @@ function Party() {
         axiosInstance.get(`/api/vi/party/getAll?page=${page}&size=${size}`)
             .then((res) => {
                 setData(res.data.content);
+                console.log(res.data.content);
                 setElements(res.data.totalElements)
             })
     }, [page, size])
@@ -82,6 +83,7 @@ function Party() {
                             <tr className='text-center'>
                                 <th>№</th>
                                 <th>Partiya nomi</th>
+                                <th>Ro'yxatga olingan sanasi</th>
                                 <th>Kelgan sanasi</th>
                                 <th>Faolligi</th>
                                 <th>Amallar</th>
@@ -94,6 +96,7 @@ function Party() {
                                         <tr className='text-center table-light' key={index}>
                                             <th>{index + 1}</th>
                                             <td>{item.name}</td>
+                                            <td>{item.addedDate}</td>
                                             <td>{item.date}</td>
                                             <td>
                                                 <div className="form-check form-switch text-center" style={{ display: "flex", justifyContent: "center" }}>

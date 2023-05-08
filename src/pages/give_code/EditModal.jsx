@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import axiosInstance, { url } from '../../utils/config'
 import ShowImage from './ShowImage'
+import InputMask from 'react-input-mask';
 
 function EditModal({ data, setData, editModal, setEditModal, Alert, setAlert }) {
     const seriesRef = useRef()
@@ -10,17 +11,22 @@ function EditModal({ data, setData, editModal, setEditModal, Alert, setAlert }) 
 
     const editFunc = (e) => {
         e.preventDefault()
+        console.log({
+            id: editModal.item.id,
+            series: seriesRef.current.value.toUpperCase()?.split("-")?.join(""),
+            pin: pinRef.current.value?.split("-")?.join("")
+        });
         axiosInstance.patch(`/client/update`, {
             id: editModal.item.id,
-            series: seriesRef.current.value.toUpperCase(),
-            pin: pinRef.current.value
+            series: seriesRef.current.value.toUpperCase()?.split("-")?.join(""),
+            pin: pinRef.current.value?.split("-")?.join("")
         }).then((res) => {
             Alert(setAlert, "success", "Muvafaqqiyatli o'zgartirildi!");
 
             const newData = data.filter((item) => {
                 if (item.id === editModal.item.id) {
-                    item.series = seriesRef.current.value
-                    item.pin = pinRef.current.value.toUpperCase()
+                    item.series = seriesRef.current.value?.split("-")?.join("")
+                    item.pin = pinRef.current.value.toUpperCase()?.split("-")?.join("")
                 }
 
                 return item
@@ -67,21 +73,21 @@ function EditModal({ data, setData, editModal, setEditModal, Alert, setAlert }) 
 
                                 <div className="col-lg-12">
                                     <div className="mb-3">
-                                        <input className="form-control form-control-lg"
+                                        <InputMask mask="aa-9999999" className="form-control form-control-lg"
+                                            style={{ textTransform: "uppercase" }}
                                             ref={seriesRef} type="text"
                                             placeholder='Pasport seriasi'
-                                            defaultValue={editModal.item.series}
-                                        />
+                                            defaultValue={editModal.item.series} />
                                     </div>
                                 </div>
 
                                 <div className="col-lg-12">
                                     <div className="mb-3">
-                                        <input className="form-control form-control-lg"
+                                        <InputMask mask="9999-9999-9999-99" className="form-control form-control-lg"
+                                            style={{ textTransform: "uppercase" }}
                                             ref={pinRef} type="text"
                                             placeholder="PNFL"
-                                            defaultValue={editModal.item.pin}
-                                        />
+                                            defaultValue={editModal.item.pin} />
                                     </div>
                                 </div>
 
