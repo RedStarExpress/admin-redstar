@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axiosInstance from '../../utils/config'
-import Select from 'react-select';
 
 function Show({ data, setData, trackCodeModal, setTrackCodeModal, selected, Alert, setAlert }) {
     const [codes, setCodes] = useState([])

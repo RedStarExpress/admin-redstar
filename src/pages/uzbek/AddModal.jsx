@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axiosInstance from '../../utils/config'
-import Select from 'react-select';
+// import Select from 'react-select';
 
 function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAlert }) {
     const [codes, setCodes] = useState([])
@@ -69,7 +69,7 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
                         <div className="row">
                             <div className="col-lg-9">
                                 <div className="mb-3">
-                                    <Select
+                                    {/* <Select
                                         ref={codeRef}
                                         className="basic-single"
                                         classNamePrefix="select"
@@ -85,7 +85,7 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
                                                 height: "48px",
                                             }),
                                         }}
-                                    />
+                                    /> */}
                                     {/* <select className="form-select" style={{ height: "48px" }} ref={codeRef}>
                                         {
                                             codes?.map((item, index) => {
