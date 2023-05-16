@@ -11,7 +11,7 @@ function Aside() {
 
     console.log(pathname);
     return (
-        <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
+        <aside className="menu-vertical menu bg-menu-theme">
             <div className="app-brand demo" style={{ height: "130px", display: "flex", justifyContent: "center" }}>
                 <Link to="/" className="app-brand-link">
                     <img src="../assets/img/logo.png" alt="" height={"180px"} />
