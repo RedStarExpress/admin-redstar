@@ -14,10 +14,12 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
         axiosInstance.get(`/client/getAllNOtPageable`)
             .then((res) => {
                 console.log(res?.data);
-                const arr = res?.data?.map(item => {
-                    return ({ value: item?.id, label: item?.code, representative: item?.representative })
-                })
-                setCodes(arr);
+                // const arr = res?.data?.map(item => {
+                //     return ({ value: item?.id, label: item?.code, representative: item?.representative })
+                // })
+                // setCodes(arr);
+
+                setCodes(res.data)
             })
     }, [])
 
@@ -34,7 +36,8 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
 
         console.log({
             partyId: selected,
-            clientCode: codeRef?.current?.props?.value?.label,
+            // clientCode: codeRef?.current?.props?.value?.label,
+            clientCode: codeRef?.current?.value,
             weight: weight,
             weightPrice: weightPrice,
             boxPrice: boxPrice,
@@ -44,7 +47,8 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
 
         axiosInstance.post(`/api/v1/report/create`, {
             partyId: selected,
-            clientCode: codeRef?.current?.props?.value?.label,
+            // clientCode: codeRef?.current?.props?.value?.label,
+            clientCode: codeRef?.current?.value,
             weight: weight,
             weightPrice: weightPrice,
             boxPrice: boxPrice,
@@ -52,17 +56,26 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
         }).then((res) => {
             setData([res.data, ...data])
 
-            console.log({
-                currency: currency,
-                money: (weight * weightPrice + boxPrice) * bonus,
-                code: codeRef?.current?.props?.value?.representative
-            });
+            const item = codes.filter(item => item.code === codeRef?.current?.value)?.[0]
 
-            axiosInstance.put(`/api/v1/accounting/add-money`, {
-                currency: currency,
-                money: (weight * weightPrice + boxPrice) * bonus,
-                code: codeRef?.current?.props?.value?.representative
-            })
+            console.log(item);
+
+            // if (codeRef?.current?.props?.value?.representative) {
+            if (item?.representative) {
+                console.log({
+                    currency: currency,
+                    money: (weight * weightPrice + boxPrice) * bonus,
+                    code: item?.representative
+                    // code: codeRef?.current?.props?.value?.representative
+                });
+
+                axiosInstance.put(`/api/v1/accounting/add-money`, {
+                    currency: currency,
+                    money: (weight * weightPrice + boxPrice) * bonus,
+                    code: item?.representative
+                    // code: codeRef?.current?.props?.value?.representative
+                })
+            }
 
             Alert(setAlert, "success", "Muvafaqqiyatli qo'shildi");
             setAddModal(false)
@@ -99,6 +112,18 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
                                             }),
                                         }}
                                     /> */}
+
+                                    <select className="form-select" style={{ height: "48px" }} ref={codeRef}>
+                                        {
+                                            codes?.map((item, index) => {
+                                                return (
+                                                    <option key={index} value={item.code} representative={item.representative}>
+                                                        {item.code}
+                                                    </option>
+                                                )
+                                            })
+                                        }
+                                    </select>
                                 </div>
                             </div>
 

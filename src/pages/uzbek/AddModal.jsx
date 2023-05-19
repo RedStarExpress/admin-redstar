@@ -9,10 +9,11 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
         axiosInstance.get(`/client/getAllNOtPageable`)
             .then((res) => {
                 console.log(res?.data);
-                const arr = res?.data?.map(item => {
-                    return ({ value: item?.id, label: item?.code })
-                })
-                setCodes(arr);
+                // const arr = res?.data?.map(item => {
+                //     return ({ value: item?.id, label: item?.code })
+                // })
+                // setCodes(arr);
+                setCodes(res?.data)
             })
     }, [])
 
@@ -25,15 +26,16 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
         const trackCodes2 = trackCodes.filter((item) => {
             return item.trim() !== ""
         })
-        console.log(codeRef?.current?.props?.value?.label);
         console.log({
             "partyId": selected,
-            "clientCode": codeRef?.current?.props?.value?.label,
+            "clientCode": codeRef?.current?.value,
+            // "clientCode": codeRef?.current?.props?.value?.label,
             "trackCodes": trackCodes2
         });
         axiosInstance.post(`/scanner/create`, {
             "partyId": selected,
-            "clientCode": codeRef?.current?.props?.value?.label,
+            "clientCode": codeRef?.current?.value,
+            // "clientCode": codeRef?.current?.props?.value?.label,
             "trackCodes": trackCodes2
         }).then((res) => {
             Alert(setAlert, "success", "Muvafaqqiyatli qo'shildi");
@@ -86,7 +88,7 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
                                             }),
                                         }}
                                     /> */}
-                                    {/* <select className="form-select" style={{ height: "48px" }} ref={codeRef}>
+                                    <select className="form-select" style={{ height: "48px" }} ref={codeRef}>
                                         {
                                             codes?.map((item, index) => {
                                                 return (
@@ -96,10 +98,7 @@ function AddModal({ data, setData, addModal, setAddModal, selected, Alert, setAl
                                                 )
                                             })
                                         }
-                                    </select> */}
-                                    {/* <input className="form-control form-control-lg"
-                                    ref={code} type="text"
-                                    placeholder='Mijoz kodi' /> */}
+                                    </select>
                                 </div>
                             </div>
                             <div className="col-lg-3 mb-3">
