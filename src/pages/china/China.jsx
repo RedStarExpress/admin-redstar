@@ -4,7 +4,8 @@ import axiosInstance from '../../utils/config';
 import AddModal from './AddModal';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
-import { AiFillDelete } from 'react-icons/ai';
+import { downloadExcel } from "react-export-table-to-excel";
+
 
 function China() {
     const [alert, setAlert] = useState({ open: false, color: "", text: "" });
@@ -14,6 +15,7 @@ function China() {
     const [selected, setSelected] = useState(null)
     const [elements, setElements] = useState()
     const [data, setData] = useState([])
+    const [data1, setData1] = useState([])
     const [party, setParty] = useState([])
     const [trackCodes, setTrackCodes] = useState([])
     const [isShow, setIsShow] = useState(false)
@@ -33,6 +35,21 @@ function China() {
                         setData(res.data.content);
                         setElements(res.data.totalElements)
                         console.log(res?.data.content);
+
+                        const arr = res.data?.content[0]?.trackCodes?.map((item, index) => {
+                            let obj = {
+                                id: index + 1,
+                                partyName: res.data?.content[0]?.partyName,
+                                code: item.code,
+                                boxNumber: item.boxNumber,
+                                createDate: item.createDate
+                            }
+
+                            return obj
+                        })
+
+                        setData1(arr)
+                        console.log(arr);
                     })
             })
     }, [page, size])
@@ -89,6 +106,20 @@ function China() {
         })
     }
 
+    const header = ["T/r", "partyName", "trackCodes", "boxNumber", "createDate"];
+
+    function handleDownloadExcel() {
+        downloadExcel({
+            fileName: "react-export-table-to-excel -> downloadExcel method",
+            sheet: "react-export-table-to-excel",
+            tablePayload: {
+                header,
+                // accept two different data structures
+                body: data1,
+            },
+        });
+    }
+
     return (
         <>
             <div className="card">
@@ -123,6 +154,12 @@ function China() {
                                 disabled={!isShow}
                                 onClick={() => deleteFunc()}>
                                 O'chirish
+                            </button>
+
+                            <button className="btn btn-info btn-lg"
+                                style={{ height: "48px" }}
+                                onClick={() => handleDownloadExcel()}>
+                                Excel
                             </button>
 
                         </div>

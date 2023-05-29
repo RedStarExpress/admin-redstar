@@ -7,6 +7,7 @@ import EditModal from './EditModal';
 import AddModal from './AddModal';
 import { AiFillDelete } from "react-icons/ai";
 import Show from './Show';
+import { downloadExcel } from "react-export-table-to-excel";
 
 function Uzbek() {
     const [alert, setAlert] = useState({ open: false, color: "", text: "" });
@@ -16,6 +17,7 @@ function Uzbek() {
     const [selected, setSelected] = useState(null)
     const [elements, setElements] = useState()
     const [data, setData] = useState([])
+    const [data1, setData1] = useState([])
     const [party, setParty] = useState([])
 
     const [addModal, setAddModal] = useState(false)
@@ -29,13 +31,40 @@ function Uzbek() {
                 setParty(res.data);
                 setSelected(res.data?.[0]?.id)
 
+
                 axiosInstance.get(`/scanner/getAllByParty/${res.data?.[0]?.id}?page=${page}&size=${size}`)
                     .then((res) => {
                         setData(res.data.content);
                         setElements(res.data.totalElements)
+
+                        console.log(res.data);
+
+                        const data = []
+
+                        res?.data?.content?.forEach((item, index) => {
+                            console.log(item);
+
+                            item?.trackCodes?.forEach((item2, index2) => {
+
+                                const obj = {
+                                    id: index2 === 0 ? index + 1 : "",
+                                    clientCode: index2 === 0 ? item.clientCode : "",
+                                    trackCodes: item2?.code
+                                }
+
+                                data.push(obj)
+                            })
+                        })
+
+                        console.log(data);
+
+                        setData1(data)
+
                     })
             })
     }, [page, size])
+
+    console.log(data1);
 
     const handlePageClick = (e) => {
         axiosInstance.get(`/scanner/getAllByParty/${selected}?page=${page}&size=${size}`)
@@ -61,6 +90,22 @@ function Uzbek() {
                 setElements(res.data.totalElements)
             })
     }
+
+
+    const header = ["T/r", "clientCode", "trackCodes"];
+
+    function handleDownloadExcel() {
+        downloadExcel({
+            fileName: "react-export-table-to-excel -> downloadExcel method",
+            sheet: "react-export-table-to-excel",
+            tablePayload: {
+                header,
+                // accept two different data structures
+                body: data1,
+            },
+        });
+    }
+
 
     return (
         <>
@@ -90,6 +135,13 @@ function Uzbek() {
                                 onClick={() => setAddModal(true)}>
                                 Yangi qo'shish
                             </button>
+
+                            <button className="btn btn-info btn-lg"
+                                style={{ height: "48px" }}
+                                onClick={() => handleDownloadExcel()}>
+                                Excel
+                            </button>
+
 
                         </div>
                     </div>

@@ -16,7 +16,7 @@ export default function Chat() {
     const [chats, setChats] = useState([])
 
     useEffect(() => {
-        axiosInstance.get(`/client/getAllNOtPageable`).then((res) => {
+        axiosInstance.get(`/client/full-list-by-chat`).then((res) => {
             setUsers(res.data)
         })
     }, [])
