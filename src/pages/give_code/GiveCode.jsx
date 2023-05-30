@@ -6,6 +6,7 @@ import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
 import AddModal from './AddModal';
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { downloadExcel } from 'react-export-table-to-excel';
 
 function GiveCode() {
     const [alert, setAlert] = useState({ open: false, color: "", text: "" });
@@ -15,6 +16,7 @@ function GiveCode() {
     const [elements, setElements] = useState()
     const [data, setData] = useState([])
     const [teachers, setTeachers] = useState([])
+    const [users, setUsers] = useState([])
     const [activTeacher, setActivTeacher] = useState(null)
 
     const [addModal, setAddModal] = useState(false)
@@ -58,6 +60,29 @@ function GiveCode() {
             })
     }, [])
 
+    useEffect(() => {
+        axiosInstance.get(`/client/getAllNOtPageable`)
+            .then((res) => {
+                console.log(res.data);
+
+                const arr = res?.data?.map((item, index) => {
+                    const obj = {
+                        id: index + 1,
+                        fullName: item.fullName,
+                        series: item.series,
+                        pin: item.pin,
+                        address: item.address,
+                        telegramId: item.telegramId,
+                        code: item.code,
+                    }
+
+                    return obj
+                })
+
+                setUsers(arr)
+            })
+    }, [])
+
     const changeTeacher = (e) => {
         setActivTeacher(e.target.value)
         axiosInstance.post(`/client/getAllByTeacher?page=${page}&size=${size}`, {
@@ -67,6 +92,20 @@ function GiveCode() {
                 setData(res.data.content);
                 setElements(res.data.totalElements)
             })
+    }
+
+    const header = ["T/r", "Ism va falimiyasi", "Pasport seriasi", "Pasport PNFL", "Yashash manzili", "Telegram idsi", "Berilgan kodi"];
+
+    function handleDownloadExcel() {
+        downloadExcel({
+            fileName: "Berilgan kodlar",
+            sheet: "Berilgan kodlar",
+            tablePayload: {
+                header,
+                // accept two different data structures
+                body: users,
+            },
+        });
     }
 
     return (
@@ -96,6 +135,12 @@ function GiveCode() {
                             style={{ height: "48px" }}
                             onClick={() => setAddModal(true)}>
                             Yangi qo'shish
+                        </button>
+
+                        <button className="btn btn-info btn-lg"
+                            style={{ height: "48px" }}
+                            onClick={() => handleDownloadExcel()}>
+                            Excel
                         </button>
 
                     </div>

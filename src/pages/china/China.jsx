@@ -106,12 +106,12 @@ function China() {
         })
     }
 
-    const header = ["T/r", "partyName", "trackCodes", "boxNumber", "createDate"];
+    const header = ["T/r", "partiya nomi", "trek kodi", "karobka nomi", "kelgan vaqti"];
 
     function handleDownloadExcel() {
         downloadExcel({
-            fileName: "react-export-table-to-excel -> downloadExcel method",
-            sheet: "react-export-table-to-excel",
+            fileName: "Xitoy baza",
+            sheet: "Xitoy baza",
             tablePayload: {
                 header,
                 // accept two different data structures

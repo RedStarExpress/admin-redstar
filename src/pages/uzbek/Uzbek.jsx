@@ -39,9 +39,18 @@ function Uzbek() {
 
                         console.log(res.data);
 
+
+
+                    })
+
+                axiosInstance.get(`/scanner/full-list/${res.data?.[0]?.id}`)
+                    .then((res) => {
+
+                        console.log(res.data);
+
                         const data = []
 
-                        res?.data?.content?.forEach((item, index) => {
+                        res?.data?.forEach((item, index) => {
                             console.log(item);
 
                             item?.trackCodes?.forEach((item2, index2) => {
@@ -59,6 +68,7 @@ function Uzbek() {
                         console.log(data);
 
                         setData1(data)
+
 
                     })
             })
@@ -92,12 +102,12 @@ function Uzbek() {
     }
 
 
-    const header = ["T/r", "clientCode", "trackCodes"];
+    const header = ["T/r", "Berilgan kodi", "Trek kodlari"];
 
     function handleDownloadExcel() {
         downloadExcel({
-            fileName: "react-export-table-to-excel -> downloadExcel method",
-            sheet: "react-export-table-to-excel",
+            fileName: "Uzbek baza",
+            sheet: "Uzbek baza",
             tablePayload: {
                 header,
                 // accept two different data structures

@@ -16,8 +16,9 @@ export default function Chat() {
     const [chats, setChats] = useState([])
 
     useEffect(() => {
-        axiosInstance.get(`/client/full-list-by-chat`).then((res) => {
+        axiosInstance.get(`/client/getAllNOtPageable`).then((res) => {
             setUsers(res.data)
+            console.log(res.data);
         })
     }, [])
 
@@ -28,18 +29,36 @@ export default function Chat() {
     }, [telegramId])
 
     const sendMe = () => {
-        axios.get(`https://api.telegram.org/bot6299992125:AAHT5wINsGE-y0rhNNAsfwW9Zygi3zmi04s/sendMessage?chat_id=${telegramId}&text=${massageRef.current?.value}`)
-            .then((res2) => {
-                axiosInstance.post(`/chat/create`, {
-                    "telegramId": telegramId,
-                    "massage": massageRef.current.value,
-                    "fromMe": true
-                }).then((res) => {
+        axiosInstance.post(`/chat/create`, {
+            "telegramId": telegramId,
+            "massage": massageRef.current.value,
+            "fromMe": true
+        }).then((res) => {
+            axios.get(`https://api.telegram.org/bot6299992125:AAHT5wINsGE-y0rhNNAsfwW9Zygi3zmi04s/sendMessage?chat_id=${telegramId}&text=${massageRef.current?.value}`)
+                .then((res2) => {
                     Alert(setAlert, "success", "Muvafaqqiyatli jo'natildi");
                     massageRef.current.value = ""
                     setChats([...chats, res?.data])
                 })
+        })
+    }
+
+    const fullSendMe = () => {
+        users.forEach((item) => {
+            axiosInstance.post(`/chat/create`, {
+                "telegramId": item.telegramId,
+                "massage": massageRef.current.value,
+                "fromMe": true
+            }).then((res) => {
+                axios.get(`https://api.telegram.org/bot6299992125:AAHT5wINsGE-y0rhNNAsfwW9Zygi3zmi04s/sendMessage?chat_id=${item.telegramId}&text=${massageRef.current?.value}`)
+                    .then((res2) => {
+                        Alert(setAlert, "success", "Muvafaqqiyatli jo'natildi");
+                        massageRef.current.value = ""
+                        setChats([...chats, res?.data])
+                    })
             })
+        })
+
     }
 
     const SeenFunc = (telegramId) => {
@@ -86,7 +105,7 @@ export default function Chat() {
                                                         return (
                                                             <li key={index} class={`p-2 border-bottom ${Number(telegramId) === user.telegramId ? "active" : ""}`}>
                                                                 <div onClick={() => SeenFunc(user.telegramId)}
-                                                                    className="d-flex justify-content-between" 
+                                                                    className="d-flex justify-content-between"
                                                                     style={{ alignItems: "center", cursor: "pointer" }}>
                                                                     <div className="d-flex flex-row" style={{ alignItems: "center" }}>
                                                                         <div>
@@ -138,7 +157,7 @@ export default function Chat() {
                                                                 </div>
                                                             </div>
                                                         ) : (
-                                                            <div key={index} className="d-flex flex-row" style={{alignItems: "center"}}>
+                                                            <div key={index} className="d-flex flex-row" style={{ alignItems: "center" }}>
                                                                 <div className='w-100'>
                                                                     <p className="small p-2 mb-1 text-white rounded-3 bg-primary">
                                                                         {chat?.massage}
@@ -167,10 +186,10 @@ export default function Chat() {
                                         {/* <a className="ms-1 text-muted" href="#!"><i className="fas fa-paperclip"></i></a> */}
                                         {/* <a className="ms-3 text-muted" href="#!"><i className="fas fa-smile"></i></a> */}
                                         <button className="ms-3 border-0 btn btn-primary" style={{ height: "77.6px" }}
-                                            onClick={() => sendMe()}>
+                                            onClick={() => fullSendMe()}>
                                             {/* style={{ color: "rgb(13,110,253)", cursor: "pointer" }} */}
                                             <i className="fas fa-paper-plane"></i>
-                                            Yuborish
+                                            Barchaga yuborish
                                         </button>
                                     </div>
 
