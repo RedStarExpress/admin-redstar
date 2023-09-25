@@ -101,6 +101,8 @@ export default function Chat() {
                                         <div data-mdb-perfect-scrollbar="true" style={{ position: "relative", height: "calc(100vh - 145px)" }}>
                                             <ul className="list-unstyled mb-0">
                                                 {
+                                                    // users?.filter(prev.)
+
                                                     users?.map((user, index) => {
                                                         return (
                                                             <li key={index} class={`p-2 border-bottom ${Number(telegramId) === user.telegramId ? "active" : ""}`}>

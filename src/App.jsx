@@ -14,6 +14,7 @@ import News from './pages/news/News'
 import Chat from './pages/chat/Chat'
 import Hisobotlar from './pages/hisobotlar/Hisobotlar'
 import Qarzim from './pages/qarzim/Qarzim'
+import GetExcelData from './pages/getExcelData/GetExcelData'
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Route path='/chats/:telegramId' element={<Layout> <Chat /></Layout>} />
       <Route path='/hisobotlar' element={<Layout> <Hisobotlar /></Layout>} />
       <Route path='/qarzlarim' element={<Layout> <Qarzim /></Layout>} />
+      <Route path='/getExelData' element={<Layout> <GetExcelData /></Layout>} />
     </Routes>
   )
 }

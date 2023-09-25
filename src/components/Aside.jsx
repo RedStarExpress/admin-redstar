@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { BiWorld, BiMessageDetail, BiNews, BiUser, BiFile,BiMoneyWithdraw } from "react-icons/bi";
+import { BiWorld, BiMessageDetail, BiNews, BiUser, BiFile,BiMoneyWithdraw, BiAddToQueue } from "react-icons/bi";
 import { BsTelegram } from "react-icons/bs"
 import { FaUsers } from "react-icons/fa"
 import { AiOutlineBarcode, AiOutlineSearch } from "react-icons/ai"
@@ -99,6 +99,13 @@ function Aside() {
                     <Link to="/qarzlarim" className="menu-link">
                         <BiMoneyWithdraw fontSize={"18px"} className='me-2' />
                         <div data-i18n="Analytics">Qarzlarim</div>
+                    </Link>
+                </li>
+                
+                <li className={`my-1 menu-item ${pathname === "/getExelData" && "active"}`}>
+                    <Link to="/getExelData" className="menu-link">
+                        <BiAddToQueue fontSize={"18px"} className='me-2' />
+                        <div data-i18n="Analytics">Get Excel Data</div>
                     </Link>
                 </li>
 

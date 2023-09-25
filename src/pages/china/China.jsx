@@ -49,7 +49,7 @@ function China() {
                         })
 
                         setData1(arr)
-                        console.log(arr);
+                        // console.log(arr);
                     })
             })
     }, [page, size])
@@ -89,21 +89,23 @@ function China() {
 
     const deleteFunc = () => {
         console.log(trackCodes);
-        axiosInstance.delete(`/base/chine/removeTrackCodes`, {
-            "trackCodes": trackCodes
-        }).then((res) => {
-            axiosInstance.get(`/api/vi/party/getAllActive`)
-                .then((res) => {
-                    setParty(res.data);
-                    setSelected(res.data?.[0]?.id)
-
-                    axiosInstance.get(`/base/chine/getAll?partyId=${res.data?.[0]?.id}&page=${page}&size=${size}`)
-                        .then((res) => {
-                            setData(res.data.content);
-                            setElements(res.data.totalElements)
-                        })
-                })
-        })
+        // for(let item of trackCodes){
+            axiosInstance.delete(`/base/chine/removeTrackCodes/`, {
+                "trackCodes": trackCodes
+            }).then((res) => {
+                axiosInstance.get(`/api/vi/party/getAllActive`)
+                    .then((res) => {
+                        setParty(res.data);
+                        setSelected(res.data?.[0]?.id)
+    
+                        axiosInstance.get(`/base/chine/getAll?partyId=${res.data?.[0]?.id}&page=${page}&size=${size}`)
+                            .then((res) => {
+                                setData(res.data.content);
+                                setElements(res.data.totalElements)
+                            })
+                    })
+            })
+        // }
     }
 
     const header = ["T/r", "partiya nomi", "trek kodi", "karobka nomi", "kelgan vaqti"];
@@ -178,7 +180,7 @@ function China() {
                             </tr>
                         </thead>
                         <tbody>
-
+                            {console.log(data)}
                             {
                                 data?.map((item, index) => {
                                     return (

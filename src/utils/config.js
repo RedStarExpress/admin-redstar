@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const defaultOptions = {
-    // baseURL: "http://localhost:9090",
-    baseURL: "http://95.46.96.45:9090",
+    baseURL: "http://localhost:9090",
+    // baseURL: "http://192.168.1.91:9090",
+    // baseURL: "http://95.46.96.45:9090",
     headers: {
         'Content-Type': 'application/json',
     },
@@ -18,5 +19,6 @@ axiosInstance.interceptors.request.use(function (config) {
 
 export default axiosInstance;
 
-// export const url = "http://localhost:9090"
-export const url = "http://95.46.96.45:9090"
+export const url = "http://localhost:9090"
+// export const url = "http://192.168.1.91:9090"
+// export const url = "http://95.46.96.45:9090"

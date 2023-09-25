@@ -72,6 +72,7 @@ function GiveCode() {
                         series: item.series,
                         pin: item.pin,
                         address: item.address,
+                        phone: item.phone,
                         telegramId: item.telegramId,
                         code: item.code,
                     }
@@ -94,7 +95,7 @@ function GiveCode() {
             })
     }
 
-    const header = ["T/r", "Ism va falimiyasi", "Pasport seriasi", "Pasport PNFL", "Yashash manzili", "Telegram idsi", "Berilgan kodi"];
+    const header = ["T/r", "Ism va falimiyasi", "Pasport seriasi", "Pasport PNFL", "Yashash manzili",  "Phone Number", "Telegram idsi", "Berilgan kodi"];
 
     function handleDownloadExcel() {
         downloadExcel({

@@ -155,6 +155,14 @@ function AddModal({ data, setData, addModal, setAddModal, Alert, setAlert, teach
                                     </select>
                                 </div>
 
+                                {/* <div className="col-lg-6">
+                                    <div className="mb-3">
+                                        <input className="form-control form-control-lg"
+                                            ref={codeRef} type="text"
+                                            placeholder='Code' />
+                                    </div>
+                                </div> */}
+
                                 <div className="col-lg-6">
                                     <div className="input-group mb-3">
                                         <input type="file"
